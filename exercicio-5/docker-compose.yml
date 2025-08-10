@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: veiculos-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - backend_data:/app/data
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=sqlite:///./data/veiculos.db
+    restart: unless-stopped
+    networks:
+      - veiculos-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Opcional: adicionar frontend quando estiver pronto
+  # frontend:
+  #   build: 
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: veiculos-frontend
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     - REACT_APP_API_URL=http://localhost:8000
+  #   networks:
+  #     - veiculos-network
+
+volumes:
+  backend_data:
+    driver: local
+
+networks:
+  veiculos-network:
+    driver: bridge
