@@ -24,20 +24,24 @@ services:
       retries: 3
       start_period: 10s
 
-  # Opcional: adicionar frontend quando estiver pronto
-  # frontend:
-  #   build: 
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   container_name: veiculos-frontend
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - backend
-  #   environment:
-  #     - REACT_APP_API_URL=http://localhost:8000
-  #   networks:
-  #     - veiculos-network
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: veiculos-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - veiculos-network
+    stdin_open: true
+    tty: true
 
 volumes:
   backend_data:

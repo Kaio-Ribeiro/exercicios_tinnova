@@ -48,12 +48,25 @@ exercicio-5/
 │   │   ├── services/      # Comunicação com API
 │   │   └── App.tsx        # Aplicação principal
 │   └── package.json       # Dependências Node.js
+├── .github/workflows/     # GitHub Actions CI/CD
 ├── docker-compose.yml     # Orquestração Docker
-├── Makefile              # Comandos de desenvolvimento
-├── start.sh              # Script de inicialização (Linux/Mac)
-├── start.ps1             # Script de inicialização (Windows)
 └── README.md
 ```
+
+## CI/CD
+
+O projeto utiliza **GitHub Actions** para integração contínua:
+
+- ✅ **Testes automatizados** em múltiplas versões do Python (3.8-3.11)
+- ✅ **Verificação de cobertura** de código (mínimo 80%)
+- ✅ **Linting** com flake8, black e isort
+- ✅ **Análise de segurança** com bandit e safety
+- ✅ **Cache de dependências** para builds mais rápidos
+
+Os workflows executam automaticamente em:
+- Push para branch `main`
+- Pull requests para `main`
+- Alterações em arquivos do backend
 
 ## Como Executar
 
